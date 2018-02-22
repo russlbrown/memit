@@ -53,7 +53,7 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   margin: 20px auto;
   padding: 20px;
-  background-image: url('/static/img/card_stack.png');
+  background-image: url('../img/card_stack.png');
 }
 
 .decks a {
