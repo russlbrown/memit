@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+	<h2>{{ deck.name }}</h2>
+	<div class="menu">
+	  	<a href="">You have {{ cards_due_for_review }}
+	  		cards due for review.
+	  	</a>
+
+	</div>
+	<div class="cards">
+	{% for card in deck.cards: %}
+		<a href="/card/{{ card.id }}">{{ card.front }}</a><br>
+	{% endfor %}
+	</div>
+</div>
+
+{% endblock %}

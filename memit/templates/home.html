@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<div class="container">
+	<h2>Decks</h2>
+	<div class="menu">
+	  	<a href="">You have {{ "1234" }} cards due for review.</a>
+
+	  	<form method="post" action="/" class="inline">
+		  <input type="hidden" name="extra_submit_param"
+		  	value="extra_submit_value">
+		  <button type="submit" name="submit_param"
+		  	value="submit_value" class="link-button">
+		    This is a link that sends a POST request
+		  </button>
+		</form>
+
+	</div>
+	<div class="clr"></div>
+	{% for deck in decks %}
+	<div class="decks">
+		<a href="/deck/{{ deck.id }}">{{ deck.name }}</a>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

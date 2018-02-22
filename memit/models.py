@@ -26,7 +26,7 @@ class Deck(models.Model):
 	name = models.CharField(max_length=200)
 	date_created = models.DateTimeField()
 	owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-
+	#cards = Card.objects.filter(deck_id=self.id)
 
 	def __str__(self):
 		return f"{self.id}: {self.name}"

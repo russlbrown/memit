@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+	<h2>Card {{ card.id }}</h2>
+	<div class="menu">
+	  	<p>Created: {{ card.date_created }}</p>
+	  	<p>Reviewed: {{ card.date_stage_started }}</p>
+	  	<p>Stage: {{ card.stage }}</p>
+	  	<a href="/card/{{ card.id }}/edit">Edit</a>
+	</div>
+	<div class="card">
+		<h5>FRONT</h5>
+		<p>{{ card.front }}</p><br>
+	</div>
+	<div class="card">
+		<h5>BACK</h5>
+		<p>{{ card.back }}</p><br>
+	</div>
+	<div class="card">
+		<h5>HINT</h5>
+		<p>{{ card.hint }}</p><br>
+	</div>
+</div>
+
+{% endblock %}

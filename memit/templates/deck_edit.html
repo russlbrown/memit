@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+	<h2>Editing {{ deck.name }} Deck</h2>
+	<div class="menu">
+	  	<form action="/deck{{ deck.id }}/update" method="POST">
+	  		Deck Name: <input type="text" name="name"><br>
+	  		<button type="submit" name="button">Save</button>
+	  		<button type="button" onclick="alert('Delete Deck?')">
+	  			Delete Deck</button>
+	  		<a href="/deck{{ deck.id }}">Cancel</a>
+	  	</form>
+	</div>
+</div>
+
+{% endblock %}
