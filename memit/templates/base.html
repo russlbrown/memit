@@ -5,24 +5,27 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="{% static 'memit/css/main.css' %}" type="text/css">
-	<title>Absorb: Learn Stuff Permanently</title>
+	<title>Memit</title>
+
 </head>
 <body>
+	
 	<header id="main-header">
 		<div class="container">
-			<a href="/">Absorb: Learn Stuff Permanently</a>
+			<a href="/">Memit</a>
+			<p>Write it. Review it. Remember it.</p>
+			<nav id="navbar">
+				<ul>
+					<li><a href="/home">Home</a></li>
+					<li><a href="/login">Login</a></li>
+					<li><a href="/logout">Logout</a></li>
+				</ul>
+				
+			</nav>
 		</div>
 	</header>
 
-	<nav id="navbar">
-		<div class="container">
-			<ul>
-				<li><a href="/home">Home</a></li>
-				<li><a href="/login">Login</a></li>
-				<li><a href="/logout">Logout</a></li>
-			</ul>
-		</div>
-	</nav>
+	
 
 {% block content %}
 
