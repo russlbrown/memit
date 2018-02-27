@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+
 <div class="container">
 	<h2>Card {{ card.id }}</h2>
 	<div class="menu">
@@ -9,18 +10,36 @@
 	  	<p>Stage: {{ card.stage }}</p>
 	  	<a href="/card/{{ card.id }}/edit">Edit</a>
 	</div>
+	
 	<div class="card">
-		<h5>FRONT</h5>
-		<p>{{ card.front }}</p><br>
+		<div class="front">
+			<h5>CUE</h5>
+			<p>{{ card.front }}</p><br>
+		</div>
+	
+		<div class="back">
+			<h5>ANSWER</h5>
+			<p>{{ card.back }}</p><br>
+		</div>
+	
+		<div class='hint'>
+			<h5>HINT</h5>
+			<p>{{ card.hint }}</p><br>
+		</div>
 	</div>
-	<div class="card">
-		<h5>BACK</h5>
-		<p>{{ card.back }}</p><br>
-	</div>
-	<div class="card">
-		<h5>HINT</h5>
-		<p>{{ card.hint }}</p><br>
-	</div>
+	<a href="#">Hint</a>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script>
+  $(document).ready(function(){
+    $('.card').click(function(){
+     $('.back').animate({height: "toggle", opacity: "toggle"}, "slow");
+     $('.front').animate({height: "toggle", opacity: "toggle"}, "slow");
+    });
+  });
+</script>
+
 
 {% endblock %}

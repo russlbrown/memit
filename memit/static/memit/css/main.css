@@ -73,6 +73,14 @@
   padding: 20px;
 }
 
+.card .back {
+  display: none;
+}
+
+.card .hint {
+  display: none;
+}
+
 .card h5 {
   padding: 0;
   margin: 0;

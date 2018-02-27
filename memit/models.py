@@ -21,6 +21,8 @@ class Card(models.Model):
 		"""https://docs.djangoproject.com/en/2.0/ref/models/instances/#django.db.models.Model.get_absolute_url"""
 		return "/card/%s" % self.id
 
+	def in_deck(deck):
+		return Cards.objects.filter(deck_id=deck.id)
 
 class Deck(models.Model):
 	name = models.CharField(max_length=200)

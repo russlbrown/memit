@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from ..models import Card, Deck
 
 class SignUpForm(UserCreationForm):
 	first_name = forms.CharField(max_length=30, required=False,
@@ -15,3 +15,15 @@ class SignUpForm(UserCreationForm):
 			model = User
 			fields = ('username', 'first_name', 'last_name',
 				'email', 'password1', 'password2', )
+
+
+class DeckForm(forms.ModelForm):
+	class Meta:
+		model = Deck
+		fields = ['name']
+
+
+class CardForm(forms.ModelForm):
+	class Meta:
+		model = Card
+		fields = ['front', 'back', 'hint', 'deck']
