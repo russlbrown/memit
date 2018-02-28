@@ -2,9 +2,11 @@
 {% block content %}
 
 <div class="container">
-	<h2>Decks</h2>
+	<h2>Home</h2>
 	<div class="menu">
-	  	<a href="">You have {{ "1234" }} cards due for review.</a><br>
+	  	<a href="/card/review_cards_due/">
+	  		You have {{ cards_due }} cards due for review.
+	  	</a><br>
 	  	<a href="/deck/new">Add new deck</a>
 	</div>
 	<div class="clr"></div>

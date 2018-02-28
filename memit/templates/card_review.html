@@ -30,6 +30,9 @@
 				<p>{{ card.hint }}</p><br>
 			</div>
 		</div>
+		<a href="/review_stack/previous_card/">Previous Card</a>
+		<a href="/card/{{ card.id }}/review/?review_result=fail">Fail</a>
+		<a href="/card/{{ card.id }}/review/?review_result=pass">Pass</a>
 	</div>
 </div>
 
@@ -38,8 +41,8 @@
 <script>
   $(document).ready(function(){
     $('.card').click(function(){
-     $('.back').animate({height: "toggle", opacity: "toggle"}, "slow");
-     $('.front').animate({height: "toggle", opacity: "toggle"}, "slow");
+     $('.back').animate({height: "toggle", opacity: "toggle"});
+     $('.front').animate({height: "toggle", opacity: "toggle"});
     });
   });
 </script>

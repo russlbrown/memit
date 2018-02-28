@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms.forms import SignUpForm, DeckForm, CardForm
-from .models import Card, Deck
+from .models import Card, Deck, ReviewStack
 
 
 
@@ -25,7 +25,9 @@ def home(request):
 			{'message': "you are not logged in"})
 		
 	decks = Deck.objects.filter(owner_id=user.id)
-	return render(request, 'home.html', {'decks': decks})
+	cards_due = len(Card.all_cards_due_for_review(user))
+	return render(request, 'home.html', {'decks': decks,
+										 'cards_due': cards_due})
 
 
 def login_user(request):
@@ -78,11 +80,14 @@ def deck(request, deck_id):
 	if user.is_authenticated and deck.owner_id == user.id:
 		# The user is logged in an the deck belongs to them
 		cards = Card.objects.filter(deck_id=deck_id)
-		return render(request, "deck.html", {'deck': deck, 'cards': cards})
+		cards_due = len(Deck.cards_due_for_review(user=user, deck=deck))
+		return render(request, "deck.html", {'deck': deck, 'cards': cards, 
+			'cards_due': cards_due})
 	else:
 		message = ("You are not logged in or are not the owner of deck " +
 				   str(deck_id) + '.')
 		return render(request, "message.html", {'message': message})
+
 
 @login_required
 def deck_edit(request):
@@ -123,14 +128,96 @@ def card_edit(request):
 		return render(request, "card_edit.html", {'form': form})
 
 
-def card(request, card_id):
+@login_required
+def card_review(request, card_id):
 	user = request.user
 	card = Card.objects.get(id=card_id)
 	if user.is_authenticated and card.owner_id == user.id:
 		# The user is logged in an the card belongs to them
-		return render(request, "card.html", {'card': card})
+		review_result = request.GET.get('review_result', '')
+
+		if review_result:
+			# Process the result of the card review
+			card.process_review_result(review_result)
+			# set ReviewStack.last_card_viewed
+			try:
+				review_stack = ReviewStack.objects.get(owner=user)
+				review_stack.card_last_viewed = card_id
+				review_stack.save()
+			except:
+				pass
+			return redirect('review_stack_next_card')
+		else:
+			return render(request, "card_review.html", {'card': card})
 	else:
 		message = ("You are not logged in or are not the owner of card " +
 				   str(card_id) + '.')
 		return render(request, "message.html", {'message': message})
 
+
+@login_required
+def card_review_cards_due(request):
+	user = request.user
+	
+	# Stop user if they are not logged in.
+	if not user.is_authenticated:
+		message = ("You are not logged in.")
+		return render(request, "message.html", {'message': message})
+	
+	cards_due = Card.all_cards_due_for_review(user)
+	review_stack = ReviewStack.set(user=user, cards=cards_due)
+
+	message = (f"review stack set: {review_stack.cards}")
+	return redirect(review_stack_next_card)
+
+
+def review_stack_next_card(request):
+	"""Redirect to the review screen of the next card in ReviewStack.cards."""
+	user = request.user
+	review_stack = ReviewStack.objects.get(owner=user)
+	# figure out which card is the next card
+	return redirect(review_stack.next_card_url())
+
+
+def review_stack_previous_card(request):
+	"""Redirect to the review screen of the next card in ReviewStack.cards."""
+	user = request.user
+	review_stack = ReviewStack.objects.get(owner=user)
+	# figure out which card is the next card
+	return redirect(review_stack.previous_card_url())
+
+
+@login_required
+def deck_review_all(request, deck_id):
+	user = request.user
+	
+	# Stop user if they are not logged in.
+	if not user.is_authenticated:
+		message = ("You are not logged in.")
+		return render(request, "message.html", {'message': message})
+	
+	cards = Card.objects.filter(deck=deck_id, owner=user)
+
+	# set up the ReviewStack
+	review_stack = ReviewStack.set(user=user, cards=cards)
+	return redirect('review_stack_next_card')
+
+
+@login_required
+def deck_review_cards_due(request, deck_id):
+	user = request.user
+	
+	# Stop user if they are not logged in.
+	if not user.is_authenticated:
+		message = ("You are not logged in.")
+		return render(request, "message.html", {'message': message})
+	
+	cards = Card.objects.filter(deck=deck_id, owner=user)
+	cards_due = []
+	
+	for card in cards:
+		if card.is_due_for_review():
+			cards_due.append(card)
+
+	review_stack = ReviewStack.set(user=user, cards=cards_due)
+	return redirect('review_stack_next_card')

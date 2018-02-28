@@ -12,5 +12,17 @@ urlpatterns = [
 	url(r'^deck/(?P<deck_id>\d+)/$', views.deck, name='deck'),
 	url(r'^deck/new/$', views.deck_edit, name='deck_new'),
 	url(r'^card/new/$', views.card_edit, name='card_new'),
-	url(r'^card/(?P<card_id>\d+)/$', views.card, name='card'),
+	url(r'^card/(?P<card_id>\d+)/review/$', views.card_review,
+		name='card_review'),
+	
+	url(r'^card/review_cards_due/$', views.card_review_cards_due,
+		name='card_review_cards_due'),
+	url(r'^review_stack/next_card/$', views.review_stack_next_card,
+		name='review_stack_next_card'),
+	url(r'^review_stack/previous_card/$', views.review_stack_previous_card,
+		name='review_stack_previous_card'),
+	url(r'^deck/(?P<deck_id>\d+)/review_all/$', views.deck_review_all, 
+		name='deck_review_all'),
+	url(r'^deck/(?P<deck_id>\d+)/review_cards_due/$',
+		views.deck_review_cards_due, name='deck_review_cards_due'),
 ]

@@ -104,7 +104,6 @@ body {
 
 
 #menu {
-  background-color: blue;
   float: left;
   width: 30%;
   box-sizing: border-box;
@@ -112,7 +111,6 @@ body {
 
 
 #main {
-  background-color: coral;
   float:right;
   width: 70%;
   box-sizing: border-box;
@@ -138,11 +136,12 @@ body {
 
 .card {
   max-width: 400px;
-  max-height: 250px;
+  min-height: 240px;
   background-color: #fff;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-  margin: 20px auto;
-  padding: 20px;
+  margin: 100px auto 20px auto;
+  padding: 30px;
+  box-sizing: border-box;
 }
 
 .card .back {
@@ -246,7 +245,7 @@ body {
   color: #fff;
   text-align: center;
   padding: 20px;
-  margin-top: 40px;
+  margin-top: 200px;
 }
 
 @media(max-width: 600px){
