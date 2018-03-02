@@ -25,25 +25,26 @@ class Card(models.Model):
 
 	def process_review_result(self, result):
 		if result == 'pass':
-			# update date of last review and advance to next stave
+			# update date of last review and advance to next stage
 			if self.is_due_for_review():
 				self.date_stage_started = datetime.now()
 				self.stage += 1
 			else:
 				pass
-		else:
+		elif result == 'fail':
 			# go back a review stage so the user will review it sooner.
 			if self.stage > 0:
 				self.date_stage_started = datetime.now()
 				self.stage -= 1
-		
+		else:
+			raise ValueError(f"Invalid review result \"{result}\".")
+
 		self.save()
 		return None
 
 	def is_due_for_review(self):
 		import pytz
-		delta = (timezone.now()
-				- self.date_stage_started).days
+		delta = (timezone.now() - self.date_stage_started).days
 		if delta >= REVIEW_STAGE[self.stage]:
 			return True
 		else:

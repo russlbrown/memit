@@ -108,10 +108,10 @@ def deck_edit(request):
 
 
 @login_required
-def card_edit(request):
-	""" Add or edit a card. """
+def card_new(request, deck_id):
+	""" Add a card. """
 	user = request.user
-	if request.method == "POST":
+	if request.method == "POST" and Deck.objects.get(id=deck_id).owner == user:
 		form = CardForm(request.POST)
 		if form.is_valid():
 			from datetime import datetime
@@ -121,11 +121,38 @@ def card_edit(request):
 			card.is_archived = False
 			card.date_stage_started = card.date_created
 			card.stage = 0
+			card.deck_id = deck_id
 			card.save()
 			return redirect(f'/deck/{card.deck.id}')
 	else:
 		form = CardForm()
 		return render(request, "card_edit.html", {'form': form})
+
+
+@login_required
+def card_edit(request, card_id):
+	"""Edit a card"""
+	user = request.user
+	card = Card.objects.get(id=card_id)
+	if user.is_authenticated and card.owner == user:
+		if request.method == "POST":
+			form = CardForm(request.POST, instance=card)
+			if form.is_valid():
+				from datetime import datetime
+				card = form.save(commit=False)
+				#card.is_archived = False
+				#card.date_stage_started = card.date_created
+				#card.stage = 0
+				#card.deck_id = deck_id
+				card.save()
+				return redirect(f'/deck/{card.deck.id}')
+		else:
+			form = CardForm(instance=card)
+			return render(request, "card_edit.html", {'form': form})
+	else:
+		message = ("You are not logged in or are not the owner of card " +
+				   str(card_id) + '.')
+		return render(request, "message.html", {'message': message})
 
 
 @login_required
@@ -148,6 +175,12 @@ def card_review(request, card_id):
 				pass
 			return redirect('review_stack_next_card')
 		else:
+			try:
+				review_stack = ReviewStack.objects.get(owner=user)
+				review_stack.card_last_viewed = card_id
+				review_stack.save()
+			except:
+				pass
 			return render(request, "card_review.html", {'card': card})
 	else:
 		message = ("You are not logged in or are not the owner of card " +

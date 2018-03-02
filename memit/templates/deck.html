@@ -7,13 +7,13 @@
 	  	<a href="/deck/{{ deck.id }}/review_cards_due/">
 	  		You have {{ cards_due }} cards due for review.<br></a>
 	  	<a href="/deck/{{ deck.id }}/review_all/">Review all cards</a><br>
-	  	<a href="/card/new/">Add new card</a><br>
+	  	<a href="/deck/{{ deck.id }}/new_card/">Add new card</a><br>
 	</div>
 	<br>
 	<div class="main">
 		<h4>Cards</h4>
 	{% for card in cards %}
-		<a href="/card/{{ card.id }}/review/">{{ card.front }}</a><br>
+		<a href="/card/{{ card.id }}/edit/">{{ card.front }}</a><br>
 	{% endfor %}
 	</div>
 </div>

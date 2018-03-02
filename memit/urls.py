@@ -11,9 +11,13 @@ urlpatterns = [
 	url(r'^home/$', views.home, name='home'),
 	url(r'^deck/(?P<deck_id>\d+)/$', views.deck, name='deck'),
 	url(r'^deck/new/$', views.deck_edit, name='deck_new'),
-	url(r'^card/new/$', views.card_edit, name='card_new'),
+	url(r'^deck/(?P<deck_id>\d)/new_card/$', views.card_new,
+		name='deck_card_new'),
 	url(r'^card/(?P<card_id>\d+)/review/$', views.card_review,
 		name='card_review'),
+	
+	 url(r'^card/(?P<card_id>\d+)/edit/$', views.card_edit,
+		name='card_edit'),
 	
 	url(r'^card/review_cards_due/$', views.card_review_cards_due,
 		name='card_review_cards_due'),
