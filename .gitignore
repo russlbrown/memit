@@ -3,9 +3,7 @@
 __pycache__
 myvenv
 db.sqlite3
-/static
 .DS_Store
 settings_secret.py
 *.ppk
-.gitignore
 */migrations/*
