@@ -223,10 +223,15 @@ def review_stack_previous_card(request):
 @login_required
 def deck_review_all(request, deck_id):
 	user = request.user
-	
-	# Stop user if they are not logged in.
-	if not user.is_authenticated:
-		message = ("You are not logged in.")
+	deck = None
+	try:
+		deck = Deck.objects.get(id=deck_id, owner=user)
+	except:
+		pass
+
+	# Stop user if they are not logged in or don't own the deck.
+	if not user.is_authenticated or not deck:
+		message = ("You aren't logged in, or don't own this deck.")
 		return render(request, "message.html", {'message': message})
 	
 	cards = Card.objects.filter(deck=deck_id, owner=user)
