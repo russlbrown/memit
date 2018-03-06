@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from .settings_secret import *
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,6 +25,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Application definition
 
@@ -77,8 +77,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'memit',
-        'USER': 'russ',
-        'PASSWORD': POSTGRESQL_DB_PWD,
+        'USER': 'russell',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '',
     }
