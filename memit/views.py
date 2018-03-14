@@ -7,7 +7,6 @@ from .forms.forms import SignUpForm, DeckForm, CardForm
 from .models import Card, Deck, ReviewStack
 
 
-
 # Create your views here.
 def index(request):
 	# if user is logged in return home.html

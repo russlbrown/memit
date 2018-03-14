@@ -1,10 +1,11 @@
 *.pyc
 *~
 __pycache__
-myvenv
+venv/
 db.sqlite3
 .DS_Store
 settings_secret.py
+local_settings.py
 *.ppk
 */migrations/*
-local_settings.py
+.idea/workspace.xml
