@@ -119,7 +119,8 @@ def card_new(request, deck_id):
 			card.owner = user
 			card.is_archived = False
 			card.date_stage_started = card.date_created
-			card.stage = 0
+			if not card.stage:
+				card.stage = 0
 			card.deck_id = deck_id
 			card.save()
 			return redirect(f'/deck/{card.deck.id}')
