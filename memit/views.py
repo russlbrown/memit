@@ -181,7 +181,8 @@ def card_review(request, card_id):
                 review_stack.save()
             except:
                 pass
-            return render(request, "card_review.html", {'card': card})
+            deck = Deck.objects.get(id=card.deck_id)
+            return render(request, "card_review.html", {'card': card, 'deck': deck})
     else:
         message = ("You are not logged in or are not the owner of card " +
                    str(card_id) + '.')

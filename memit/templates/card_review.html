@@ -3,13 +3,13 @@
 
 
 <div class="container">
+	<br>
 	<div id="menu">
-		<h2>Card {{ card.id }}</h2>
-	  	<p>Created: {{ card.date_created }}</p>
-	  	<p>Reviewed: {{ card.date_stage_started }}</p>
-	  	<p>Stage: {{ card.stage }}</p>
-	  	<a href="/card/{{ card.id }}/edit/">Edit</a><br>
-	  	<a href="/card/{{ card.id }}/delete/">Delete</a><br>
+		<p>Review Stage: {{ card.stage }}</p>
+		<p>Deck: {{ deck.name }}</p>
+		
+    <a href="/card/{{ card.id }}/edit/">Edit</a><br>
+    <a href="/card/{{ card.id }}/delete/">Delete</a>
 	</div>
 	
 	<div id="main">

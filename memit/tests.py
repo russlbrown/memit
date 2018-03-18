@@ -1,6 +1,6 @@
 from django.test import TestCase
 import unittest
-from .models import Card
+from .models import Card, Deck
 from django.utils import timezone
 from datetime import datetime, timedelta
 import pytz
@@ -10,6 +10,10 @@ from .settings import REVIEW_STAGE
 # Create your tests here.
 class CardTestCase(TestCase):
     def setUp(self):
+
+        Deck.objects.create(id=2, name='Deck Two',
+                            date_created=datetime(2018, 3, 1, 8, 15, 12, 0, pytz.UTC),
+                            owner_id=1)
         Card.objects.create(id=123, front='Test front', back='test_back',
                             hint='test hint',
                             date_created=datetime(2018, 3, 1, 8, 15, 12, 0, pytz.UTC),
@@ -110,4 +114,4 @@ class CardTestCase(TestCase):
         card10 = Card.objects.get(id=10)
         card10.delete()
 
-        assert (card10 is None)
+        self.assertRaises(ValueError, Card.objects.get(id=10))

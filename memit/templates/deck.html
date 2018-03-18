@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
+<br>
 <div class="container">
-	<h2>{{ deck.name }}</h2>
+	<h2>Deck: {{ deck.name }}</h2>
 	<div class="menu">
 	  	<a href="/deck/{{ deck.id }}/review_cards_due/">
 	  		You have {{ cards_due }} cards due for review.<br></a>
