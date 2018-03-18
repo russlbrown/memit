@@ -7,35 +7,31 @@
 	<div id="menu">
 		<p>Review Stage: {{ card.stage }}</p>
 		<p>Deck: {{ deck.name }}</p>
-		
+
     <a href="/card/{{ card.id }}/edit/">Edit</a><br>
     <a href="/card/{{ card.id }}/delete/">Delete</a>
 	</div>
 	
-	<div id="main">
-		<div class="card">
-			<div class="front">
-				<h5>CUE</h5>
-				<p>{{ card.front }}</p><br>
-			</div>
-		
-			<div class="back">
-				<h5>ANSWER</h5>
-				<p>{{ card.back }}</p><br>
-			</div>
-		
-			<div class='hint'>
-				<h5>HINT</h5>
-				<p>{{ card.hint }}</p><br>
-			</div>
+	
+	<div class="card">
+		<div class="front">
+			<h5>CUE</h5>
+			<p>{{ card.front }}</p><br>
 		</div>
-		<a href="/review_stack/previous_card/">Previous Card</a>
-		<a href="/card/{{ card.id }}/review/?review_result=fail">Fail</a>
-		<a href="/card/{{ card.id }}/review/?review_result=pass">Pass</a>
+	
+		<div class="back">
+			<h5>ANSWER</h5>
+			<p>{{ card.back }}</p><br>
+		</div>
 	</div>
+		
+	<a href="/review_stack/previous_card/">Previous Card</a>
+	<a href="/card/{{ card.id }}/review/?review_result=fail">Fail</a>
+	<a href="/card/{{ card.id }}/review/?review_result=pass">Pass</a>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 </script>
 <script>
   $(document).ready(function(){
@@ -44,7 +40,7 @@
      $('.front').animate({height: "toggle", opacity: "toggle"});
     });
   });
-</script>
+</script> -->
 
 
 {% endblock %}
