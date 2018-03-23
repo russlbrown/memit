@@ -5,57 +5,64 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 import pytz
 from .settings import REVIEW_STAGE
+from django.contrib.auth.models import User
 
 
 # Create your tests here.
 class CardTestCase(TestCase):
     def setUp(self):
+        user1 = User.objects.create_user(id=1, username='User One',
+                                 email='jlennon@beatles.com',
+                                 password='glass onion')
+        user2 = User.objects.create_user(id=2, username='UserTwo',
+                                 email='usertwwo@s.com',
+                                 password='meh who cares')
 
         Deck.objects.create(id=2, name='Deck Two',
                             date_created=datetime(2018, 3, 1, 8, 15, 12, 0, pytz.UTC),
-                            owner_id=1)
+                            owner=user1)
         Card.objects.create(id=123, front='Test front', back='test_back',
                             hint='test hint',
                             date_created=datetime(2018, 3, 1, 8, 15, 12, 0, pytz.UTC),
-                            is_archived=False, owner_id=1, stage=3, deck_id=2)
+                            is_archived=False, owner=user1, stage=3, deck_id=2)
 
         Card.objects.create(id=0, front='Test front', back='test_back',
                             hint='test hint',
                             date_stage_started=timezone.now(),
-                            is_archived=False, owner_id=1, stage=0, deck_id=2)
+                            is_archived=False, owner=user1, stage=0, deck_id=2)
 
         Card.objects.create(id=10, front='Test front', back='test_back',
                             hint='test hint',
                             date_stage_started=(timezone.now()
                                                 - timedelta(days=(REVIEW_STAGE[1] - 1))),
-                            is_archived=False, owner_id=1, stage=1, deck_id=2)
+                            is_archived=False, owner=user1, stage=1, deck_id=2)
         Card.objects.create(id=11, front='Test front', back='test_back',
                             hint='test hint',
                             date_stage_started=(timezone.now()
                                                 - timedelta(days=(REVIEW_STAGE[1]))),
-                            is_archived=False, owner_id=1, stage=1, deck_id=2)
+                            is_archived=False, owner=user1, stage=1, deck_id=2)
 
         Card.objects.create(id=20, front='Test front', back='test_back',
                             hint='test hint',
                             date_stage_started=(timezone.now()
                                                 - timedelta(days=(REVIEW_STAGE[2] - 1))),
-                            is_archived=False, owner_id=1, stage=2, deck_id=2)
+                            is_archived=False, owner=user1, stage=2, deck_id=2)
         Card.objects.create(id=21, front='Test front', back='test_back',
                             hint='test hint',
                             date_stage_started=(timezone.now()
                                                 - timedelta(days=(REVIEW_STAGE[2]))),
-                            is_archived=False, owner_id=1, stage=2, deck_id=2)
+                            is_archived=False, owner=user1, stage=2, deck_id=2)
 
         Card.objects.create(id=30, front='Test front', back='test_back',
                             hint='test hint',
                             date_stage_started=(timezone.now()
                                                 - timedelta(days=(REVIEW_STAGE[3] - 1))),
-                            is_archived=False, owner_id=2, stage=3, deck_id=2)
+                            is_archived=False, owner=user2, stage=3, deck_id=2)
         Card.objects.create(id=31, front='Test front', back='test_back',
                             hint='test hint',
                             date_stage_started=(timezone.now()
                                                 - timedelta(days=(REVIEW_STAGE[3]))),
-                            is_archived=False, owner_id=2, stage=3, deck_id=2)
+                            is_archived=False, owner=user2, stage=3, deck_id=2)
 
     def test_recall(self):
         card = Card.objects.get(id=123)
@@ -111,7 +118,11 @@ class CardTestCase(TestCase):
         self.assertRaises(ValueError, card10.process_review_result, 'banana')
 
     def test_delete(self):
-        card10 = Card.objects.get(id=10)
-        card10.delete()
+        Card.objects.get(id=10).delete()
+        
+        try:
+            card10 = Card.objects.get(id=10)
+        except:
+            card10 = None
 
-        self.assertRaises(ValueError, Card.objects.get(id=10))
+        assert card10 == None

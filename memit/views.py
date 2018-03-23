@@ -14,7 +14,18 @@ def index(request):
         return redirect('home')
     # if user is not logged in return login.html
     else:
-        return redirect('login')
+        if request.method == "POST":
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                return redirect('home')
+        else:
+            form = SignUpForm()
+        return render(request, 'index.html', {'form': form})
 
 
 def home(request):
@@ -188,6 +199,18 @@ def card_review(request, card_id):
                    str(card_id) + '.')
         return render(request, "message.html", {'message': message})
 
+
+@login_required
+def card_delete(request, card_id):
+    user = request.user
+    card = Card.objects.get(id=card_id)
+    deck_id = card.deck_id
+    if user.is_authenticated and card.owner_id == user.id:
+        card.delete()
+        return redirect(f"/deck/{deck_id}/")
+    else:
+        message = f"Could not delete card {card_id}."
+        return render(request, 'message.html', {'message': message})
 
 @login_required
 def card_review_cards_due(request):

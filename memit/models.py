@@ -18,7 +18,11 @@ class Card(models.Model):
     deck = models.ForeignKey('Deck', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.id}: {self.front[0:32]}"
+        length = 32
+        ellipses = ""
+        if len(self.front) > length:
+            ellipses = "..."
+        return f"{self.front[0:length]}{ellipses}"
 
     def get_absolute_url(self):
         """https://docs.djangoproject.com/en/2.0/ref/models/instances/#django.db.models.Model.get_absolute_url"""
