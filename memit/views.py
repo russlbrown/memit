@@ -34,7 +34,7 @@ def home(request):
         return render(request, 'message.html',
                       {'message': "you are not logged in"})
 
-    decks = Deck.objects.filter(owner_id=user.id)
+    decks = Deck.objects.filter(owner_id=user.id).order_by('name')
     cards_due = len(Card.all_cards_due_for_review(user))
     return render(request, 'home.html', {'decks': decks,
                                          'cards_due': cards_due})

@@ -5,7 +5,11 @@
 <div class="container">
 	<h2>Deck: {{ deck.name }}</h2>
 	<div class="menu">
-	  	<a href="/deck/{{ deck.id }}/review_cards_due/">
+	  	<a
+          {% if cards_due > 0 %}
+            href="/deck/{{ deck.id }}/review_cards_due/"
+          {% endif %}
+      >
 	  		You have {{ cards_due }} cards due for review.<br></a>
 	  	<a href="/deck/{{ deck.id }}/review_all/">Review all cards</a><br>
 	  	<a href="/deck/{{ deck.id }}/new_card/">Add new card</a><br>

@@ -102,7 +102,7 @@ body {
   background: #FFFFFF;
   max-width: 1000px;
   margin: 0 auto 100px;
-  padding: 45px;
+  padding: 20px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
@@ -112,16 +112,16 @@ body {
   background: #f2f2f2;
   width: 100%;
   border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
+  margin: 0 0 5px;
+  padding: 10px 10px 10px .9em;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: .9em;
 }
 .form button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background: #4c50af;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -132,7 +132,7 @@ body {
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: #4347a0;
 }
 .form .message {
   margin: 15px 0 0;
@@ -140,7 +140,7 @@ body {
   font-size: 12px;
 }
 .form .message a {
-  color: #4CAF50;
+  color: #4c50af;
   text-decoration: none;
 }
 .form .register-form {
@@ -148,7 +148,14 @@ body {
 }
 
 
-
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .login_page {
+  width: 100%;
+  padding: 8% 0 0;
+  margin: auto;
+}
+}
 
 /* @media(max-width: 600px){
   #main{
