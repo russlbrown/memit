@@ -5,22 +5,19 @@
 <div class="container">
 	<br>
 	<div id="menu">
-		<p>Review Stage: {{ card.stage }}</p>
-		<p>Deck: {{ deck.name }}</p>
-
-    <a href="/card/{{ card.id }}/edit/">Edit</a><br>
+		<a href="/card/{{ card.id }}/edit/">Edit</a><br>
     <a href="/card/{{ card.id }}/delete/">Delete</a>
 	</div>
 	
 	
 	<div class="card">
 		<div class="front">
-			<h5>CUE</h5>
+			<h6>CUE | Deck: {{ deck.name }}</h6>
 			<p>{{ card.front }}</p><br>
 		</div>
 	
 		<div class="back">
-			<h5>ANSWER</h5>
+			<h6>ANSWER</h6>
 			<p>{{ card.back }}</p><br>
 		</div>
 	</div>
