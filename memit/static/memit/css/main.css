@@ -16,7 +16,13 @@ body {
   background: #F8F8F8;
 }
 
-
+#cue_card_background {
+    background-image: url('../img/cue_cards_1280x853.jpeg');
+    /* opacity: 0.7;
+    filter: alpha(opacity=70); /* For IE8 and earlier */
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 
 
@@ -126,7 +132,7 @@ body {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4c50af;
+  background: #0275d8;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -137,7 +143,7 @@ body {
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #4347a0;
+  background: #025aa5;
 }
 .form .message {
   margin: 15px 0 0;
@@ -145,7 +151,7 @@ body {
   font-size: 12px;
 }
 .form .message a {
-  color: #4c50af;
+  color: #025aa5;
   text-decoration: none;
 }
 .form .register-form {

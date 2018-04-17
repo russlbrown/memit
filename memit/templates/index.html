@@ -1,16 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="jumbotron">
-  <div class="row align-items-center">
+<div class="jumbotron" id="cue_card_background">
+  <div class="row">
+    <div class="col-md-1"></div>
 
-    <div class="col-sm">
-      <h1>Learn stuff permanently</h1>
-      <h5>Memit is a learning app for making and reviewing cue-cards. It helps you review cards at the
-        proper intervals to commit them to your long-term memory.</h5>
+    <div class="col-md-5">
+      <div class="card">
+		<div class="front">
+			<h6>CUE</h6>
+            <H2>How do I learn stuff permanently?</H2>
+            <small>click card to see answer</small>
+		</div>
+
+		<div class="back">
+			<h6>ANSWER</h6>
+          <H5>Using Memit.ca!</H5><H5>With memit you can make and review cue-cards. Memit reminds
+              you when to review the cards so that you won't forget anything you learned.</H5><br>
+		</div>
+      </div>
     </div>
 
-    <div class="col-sm">
+    <div class="col-md-5">
       <div class="login_page">
         <div class="form">
           <form class="login-form" method="post">
@@ -31,6 +42,7 @@
         </div>
       </div>
     </div>
+    <div class="col-md-1"></div>
 
   </div>
 </div>
