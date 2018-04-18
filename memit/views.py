@@ -193,11 +193,26 @@ def card_review(request, card_id):
             except:
                 pass
             deck = Deck.objects.get(id=card.deck_id)
-            return render(request, "card_review.html", {'card': card, 'deck': deck})
+            return render(request, "card_review.html", {'card': card,
+                                                        'deck': deck})
     else:
         message = ("You are not logged in or are not the owner of card " +
                    str(card_id) + '.')
         return render(request, "message.html", {'message': message})
+
+
+@login_required
+def card_review_one(request, card_id):
+    """Set up the review stack with the card of choice.
+
+    Redirect user to review_card"""
+    user = request.user
+
+    cards = [Card.objects.get(id=card_id, owner=user), ]
+
+    # set up the ReviewStack
+    ReviewStack.set(user=user, cards=cards)
+    return redirect('review_stack_next_card')
 
 
 @login_required
@@ -212,19 +227,20 @@ def card_delete(request, card_id):
         message = f"Could not delete card {card_id}."
         return render(request, 'message.html', {'message': message})
 
+
 @login_required
 def card_review_cards_due(request):
     user = request.user
 
     # Stop user if they are not logged in.
     if not user.is_authenticated:
-        message = ("You are not logged in.")
+        message = "You are not logged in."
         return render(request, "message.html", {'message': message})
 
     cards_due = Card.all_cards_due_for_review(user)
     review_stack = ReviewStack.set(user=user, cards=cards_due)
 
-    message = (f"review stack set: {review_stack.cards}")
+    message = f"review stack set: {review_stack.cards}"
     return redirect(review_stack_next_card)
 
 

@@ -21,6 +21,8 @@ urlpatterns = [
     # Cards
     url(r'^card/(?P<card_id>\d+)/review/$', views.card_review,
         name='card_review'),
+    url(r'^card/(?P<card_id>\d+)/review_one/$', views.card_review_one,
+        name='card_review_one'),
     url(r'^card/(?P<card_id>\d+)/edit/$', views.card_edit,
         name='card_edit'),
     url(r'^card/(?P<card_id>\d+)/delete/$', views.card_delete,
