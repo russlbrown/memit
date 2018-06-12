@@ -10,13 +10,17 @@ urlpatterns = [
 
     # Decks
     url(r'^deck/(?P<deck_id>\d+)/$', views.deck, name='deck'),
-    url(r'^deck/new/$', views.deck_edit, name='deck_new'),
+    url(r'^deck/new/$', views.deck_new, name='deck_new'),
     url(r'^deck/(?P<deck_id>\d+)/new_card/$', views.card_new,
         name='deck_card_new'),
     url(r'^deck/(?P<deck_id>\d+)/review_all/$', views.deck_review_all,
         name='deck_review_all'),
     url(r'^deck/(?P<deck_id>\d+)/review_cards_due/$',
         views.deck_review_cards_due, name='deck_review_cards_due'),
+    url(r'^deck/(?P<deck_id>\d+)/edit/$', views.deck_edit,
+        name='deck_edit'),
+    url(r'^deck/(?P<deck_id>\d+)/delete/$', views.deck_delete,
+        name='deck_delete'),
 
     # Cards
     url(r'^card/(?P<card_id>\d+)/review/$', views.card_review,

@@ -100,8 +100,8 @@ def deck(request, deck_id):
 
 
 @login_required
-def deck_edit(request):
-    """ Add or edit a deck. """
+def deck_new(request):
+    """ Add a deck. """
     user = request.user
     if request.method == "POST":
         form = DeckForm(request.POST)
@@ -111,10 +111,45 @@ def deck_edit(request):
             deck.date_created = datetime.now()
             deck.owner = user
             deck.save()
-            return redirect('home')
+            return redirect(f'/deck/{deck.id}')
     else:
         form = DeckForm()
         return render(request, "deck_edit.html", {'form': form})
+
+
+@login_required
+def deck_edit(request, deck_id):
+    """Edit a card"""
+    user = request.user
+    deck = Deck.objects.get(id=deck_id)
+    if user.is_authenticated and deck.owner == user:
+        if request.method == "POST":
+            form = DeckForm(request.POST, instance=deck)
+            if form.is_valid():
+                deck = form.save(commit=False)
+                deck.save()
+                return redirect(f'/deck/{deck.id}')
+        else:
+            form = DeckForm(instance=deck)
+            return render(request, "deck_edit.html", {'form': form,
+                                                      'deck': deck})
+    else:
+        message = ("You are not logged in or are not the owner of deck " +
+                   str(deck_id) + '.')
+        return render(request, "message.html", {'message': message})
+
+
+@login_required
+def deck_delete(request, deck_id):
+    user = request.user
+    deck_ = Deck.objects.get(id=deck_id)
+
+    if user.is_authenticated and deck_.owner_id == user.id:
+        deck_.delete()
+        return redirect(f"/home/")
+    else:
+        message = f"Could not delete deck {deck_id}."
+        return render(request, 'message.html', {'message': message})
 
 
 @login_required
@@ -159,7 +194,8 @@ def card_edit(request, card_id):
                 return redirect(f'/deck/{card.deck.id}')
         else:
             form = CardForm(instance=card)
-            return render(request, "card_edit.html", {'form': form})
+            return render(request, "card_edit.html", {'form': form,
+                                                      'card': card})
     else:
         message = ("You are not logged in or are not the owner of card " +
                    str(card_id) + '.')
