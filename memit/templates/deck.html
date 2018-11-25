@@ -4,6 +4,7 @@
 <br>
 <div class="container">
 	<h4>{{ deck.name }}</h4>
+	
 	<div class="menu">
 	  <div class="alert alert-info" role="alert">
       You have <a
@@ -13,17 +14,20 @@
       class="alert-link">{{ cards_due }} cards</a> due for review.
     </div>
 
-    <a href="/deck/{{ deck.id }}/review_all/">Review all cards</a><br>
-    <a href="/deck/{{ deck.id }}/new_card/">Add new card</a><br>
+    <a href="/deck/{{ deck.id }}/review_all/">Review all cards</a>
+    <br>
+    <a href="/deck/{{ deck.id }}/new_card/">Add new card</a>
+    <br>
 		<br>
 		<a href="/deck/{{ deck.id }}/edit/">Rename or Delete Deck</a>
 	</div>
 	<br>
+	
 	<div class="main">
 		<h5>Cards</h5>
-	{% for card in cards %}
-		<a href="/card/{{ card.id }}/review_one">{{ card }}</a><br>
-	{% endfor %}
+		{% for card in cards %}
+			<a href="/card/{{ card.id }}/review_one">{{ card }}</a><br>
+		{% endfor %}
 	</div>
 </div>
 

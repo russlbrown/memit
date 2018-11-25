@@ -4,9 +4,17 @@
 <div class="container">
 	<br>
 	<div class="menu">
-	  	<a href="/card/review_cards_due/">
-	  		You have {{ cards_due }} cards due for review.
-	  	</a><br>
+
+	  	<div class="alert alert-info" role="alert">
+	      You have <a
+	      {% if cards_due > 0 %}
+	        href="/card/review_cards_due/"
+	      {% endif %}
+	      class="alert-link">{{ cards_due }} cards</a> due for review.
+      	</div>
+
+
+	  	<br>
 	  	<a href="/deck/new">Add new deck</a>
 	</div>
 	<div class="clr"></div>

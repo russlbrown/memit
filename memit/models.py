@@ -55,9 +55,10 @@ class Card(models.Model):
         else:
             return False
 
+    @staticmethod
     def all_cards_due_for_review(user):
         """Returns all of a user's cards that are due for review."""
-        cards = Card.objects.filter(owner=user)
+        cards = Card.objects.filter(owner=user).order_by('deck', 'front')
         # Get a list of the cards due for review
         cards_due = []
         for card in cards:
@@ -80,9 +81,9 @@ class Deck(models.Model):
         """https://docs.djangoproject.com/en/2.0/ref/models/instances/#django.db.models.Model.get_absolute_url"""
         return "/deck/%s" % self.id
 
-    def cards_due_for_review(deck, user):
+    def cards_due_for_review(self, user):
         """Returns all of a user's cards that are due for review."""
-        cards = Card.objects.filter(owner=user, deck=deck)
+        cards = Card.objects.filter(owner=user, deck=self).order_by('front')
         # Get a list of the cards due for review
         cards_due = []
         for card in cards:
@@ -156,7 +157,6 @@ class ReviewStack(models.Model):
         else:
             return '/home/'
 
-    # This function doesn't work yet 2018-02-28
     def previous_card_url(self):
         """ Return the URL of the prev card review i.e. /card/<card_id>/review/
 		

@@ -89,8 +89,8 @@ def deck(request, deck_id):
     deck = Deck.objects.get(id=deck_id)
     if user.is_authenticated and deck.owner_id == user.id:
         # The user is logged in an the deck belongs to them
-        cards = Card.objects.filter(deck_id=deck_id)
-        cards_due = len(Deck.cards_due_for_review(user=user, deck=deck))
+        cards = Card.objects.filter(deck_id=deck_id).order_by('front')
+        cards_due = len(deck.cards_due_for_review(user=user))
         return render(request, "deck.html", {'deck': deck, 'cards': cards,
                                              'cards_due': cards_due})
     else:
@@ -320,18 +320,19 @@ def deck_review_all(request, deck_id):
 @login_required
 def deck_review_cards_due(request, deck_id):
     user = request.user
+    deck = None
+    try:
+        deck = Deck.objects.get(id=deck_id, owner=user)
+    except:
+        pass
+
 
     # Stop user if they are not logged in.
     if not user.is_authenticated:
         message = ("You are not logged in.")
         return render(request, "message.html", {'message': message})
 
-    cards = Card.objects.filter(deck=deck_id, owner=user)
-    cards_due = []
-
-    for card in cards:
-        if card.is_due_for_review():
-            cards_due.append(card)
+    cards_due = deck.cards_due_for_review(user=user)
 
     review_stack = ReviewStack.set(user=user, cards=cards_due)
     return redirect('review_stack_next_card')
